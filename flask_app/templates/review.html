@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Review</title>
+</head>
+<body>
+    <div class="navbar">
+        <img id="navbar_background" src="{{url_for('static', filename='imgs/wood_background2.jpg')}}" alt="navbar_background" />
+
+        <script type="text/javascript">
+        target=document.getElementById('navbar_background');
+        target.style.width=(screen.width)+'px';
+        target.style.height=((screen.height/10))+'px';
+        
+        </script>
+        <div class="navbar_left">
+                <button class="navbar_button_1">
+                <a href="/discover" class="navbar_text">Discover</a>
+                </button>
+                <button class="navbar_button_1">
+                <a href="/popular" class="navbar_text">Popular</a>
+                </button>
+                <button class="navbar_button_1">
+                    <a href="/home" class="navbar_text">Home</a>
+                </button>
+        </div>
+        <div class="navbar_right">
+            <!-- Checks too see if the user is logged in or not -->
+            {% if user_id > 0 %}
+            <div>
+                <form action="/logout" method="POST">
+                    <input type="submit" class="navbar_button_3" value="Logout">
+                </form>
+            </div>
+            <div>
+                    <button class="navbar_button_2">
+                    <a href="/profile" class="navbar_text">Profile</a>
+                    </button>
+            </div>
+            
+            {% else %}
+                    <a href="/" class="navbar_text">Login</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="flex center mt-100">
+        <div class="att_qr_box flex add_review_box">
+            <div class="mb-20 mt-50">
+                <h1>Add A Review</h1>
+            </div>
+            <div class="flex">
+            <form action="add_review" method="post">
+                <div class="flex mb-10">
+                    <div class="login-text">
+                        Restaurant Name:
+                    </div>
+                    <div>
+                        <input type="text" name="Restuarant_Name" class="search_cont">
+                    </div>
+                </div>
+                <div class="flex mb-50">
+                    <div class="login-text">
+                        Rating:
+                    </div>
+                    <div class="rating">
+                        <input type="radio" name="rating" class="search_cont" id="star1" value="5"><label for="star1"></label>
+                        <input type="radio" name="rating" class="search_cont" id="star2" value="4"><label for="star2"></label>
+                        <input type="radio" name="rating" class="search_cont" id="star3" value="3"><label for="star3"></label>
+                        <input type="radio" name="rating" class="search_cont" id="star4" value="2"><label for="star4"></label>
+                        <input type="radio" name="rating" class="search_cont" id="star5" value="1"><label for="star5"></label>
+                    </div>
+                </div>
+                <div class="flex mb-10">
+                    <div class="login-text">
+                        Review:
+                    </div>
+                    <div>
+                        <input type="text" name="review" class="search_cont">
+                    </div>
+                    
+                </div>
+                <div class="flex mb-20">
+                    <input type="submit" name="Register" class="att-but" value="Submit">
+                </div>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

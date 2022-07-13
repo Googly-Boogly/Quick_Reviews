@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Popular</title>
+</head>
+<body>
+    <div class="navbar">
+        <img id="navbar_background" src="{{url_for('static', filename='imgs/wood_background2.jpg')}}" alt="navbar_background" />
+
+        <script type="text/javascript">
+        target=document.getElementById('navbar_background');
+        target.style.width=(screen.width)+'px';
+        target.style.height=((screen.height/10))+'px';
+        
+        </script>
+        <div class="navbar_left">
+                <button class="navbar_button_1">
+                <a href="/home" class="navbar_text">Home</a>
+                </button>
+                <button class="navbar_button_1">
+                <a href="/discover" class="navbar_text">Discover</a>
+                </button>
+                <button class="navbar_button_1">
+                    <a href="/review" class="navbar_text">Add Review</a>
+                </button>
+        </div>
+        <div class="navbar_right">
+            <!-- Checks too see if the user is logged in or not -->
+            {% if user_id > 0 %}
+            <div>
+                <form action="/logout" method="POST">
+                    <input type="submit" class="navbar_button_3" value="Logout">
+                </form>
+            </div>
+            <div>
+                    <button class="navbar_button_2">
+                    <a href="/profile" class="navbar_text">Profile</a>
+                    </button>
+            </div>
+            
+            {% else %}
+                    <a href="/" class="navbar_text">Login</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="popular_page">
+        {% for review in reviews %}
+        <div class=" flex info_box_pop rows">
+            <div class="title_rating_pop">
+                <div class="title_pop">
+                    <p class="pop_title_p">
+                        {{review.rest_name}}
+                    </p>
+                </div>
+                <div class="rating_pop flex rows">
+                    <p class="pop_rating_p">
+                        {{review.rating}}
+                    </p>
+                    {% for star in range(review.rating) %}
+                            <span class="fa fa-star checked_pop"></span>
+                        {% endfor %}
+                        {% for star in range(5 - (review.rating)) %}
+                            <span class="fa fa-star unchecked_pop"></span>
+                        {% endfor %}
+                </div>
+            </div>
+            <div class="review_div_pop">
+                <p class="pop_review_p">
+                    {{review.review}}
+                </p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</body>
+</html>

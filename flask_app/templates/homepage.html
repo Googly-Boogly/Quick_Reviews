@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <title>Home</title>
+</head>
+<body>
+    <div class="navbar">
+        <img id="navbar_background" src="{{url_for('static', filename='imgs/wood_background2.jpg')}}" alt="navbar_background" />
+
+        <script type="text/javascript">
+        target=document.getElementById('navbar_background');
+        target.style.width=(screen.width)+'px';
+        target.style.height=((screen.height/10))+'px';
+        
+        </script>
+        <div class="navbar_left">
+                <button class="navbar_button_1">
+                <a href="/discover" class="navbar_text">Discover</a>
+                </button>
+                <button class="navbar_button_1">
+                <a href="/popular" class="navbar_text">Popular</a>
+                </button>
+                <button class="navbar_button_1">
+                    <a href="/review" class="navbar_text">Add Review</a>
+                </button>
+        </div>
+        <div class="navbar_right">
+            <!-- Checks too see if the user is logged in or not -->
+            {% if user_id > 0 %}
+            <div>
+                <form action="/logout" method="POST">
+                    <input type="submit" class="navbar_button_3" value="Logout">
+                </form>
+            </div>
+            <div>
+                    <button class="navbar_button_2">
+                    <a href="/profile" class="navbar_text">Profile</a>
+                    </button>
+            </div>
+            
+            {% else %}
+                    <a href="/" class="navbar_text">Login</a>
+            {% endif %}
+        </div>
+    </div>
+    
+    <div class="flex center mt-50">
+        <div class="main_content">
+            <!-- This page will show any reviews you have -->
+        
+            {% if reviews|length == 0 %}
+                <h1 class="color_white mb-20">Oh No! You have not reviewed any restaurants!</h1>
+                <button class="new_review_but">
+                <a href="/review" class="button_a">Add a Review</a>
+                </button>
+            {% else %}
+                <h1 class="color_white">Your Recent Reviews</h1>
+                <div class="review_table">
+                {% for review in reviews %}
+
+                    <div class="review_box">
+                        <div class="review_box_rest_name">
+                    <h1 class="color_white">
+                        {{review.rest_name}}
+                    </h1>
+                </div>
+                        <div class="star_box">
+                            {% for star in range(review.rating) %}
+                                    <span class="fa fa-star checked"></span>
+                                {% endfor %}
+                                {% for star in range(5 - (review.rating)) %}
+                                    <span class="fa fa-star unchecked"></span>
+                                {% endfor %}
+                        </div>
+                        <div class="mr_5p">
+                            <h1 class="color_white">
+                                {{review.review}}
+                            </h1>
+                        </div>
+                    </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+        <div class="ml-20">
+            <img src="{{url_for('static', filename='imgs/review_3.png')}}" alt="doomy" class="pic_list">
+            <img src="{{url_for('static', filename='imgs/magnify_glass_1.png')}}" alt="doomy" class="pic_mag_glass">
+        </div>
+    </div>
+</body>
+</html>
